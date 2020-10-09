@@ -1,0 +1,358 @@
+body{
+    max-width: 100%;
+    background: #111111;
+    margin: 0;
+}
+
+.top{
+    padding: 1% 5% 0 1%;
+}
+.hamburger{
+    width: 20px;
+    height: 15px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+.top-hamburger{
+    width: 100%;
+    height: 3px;
+    background-color: lightgreen;
+    position: absolute;
+    top:0 ;
+    left: 0;
+}
+.middle-hamburger{
+    width: 100%;
+    height: 3px;
+    background-color: lightgreen;
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+.bottom-hamburger{
+    width: 100%;
+    height: 3px;
+    background-color: lightgreen;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+.menu-content{
+    position: absolute;
+    left: calc(-100% - 200px);
+    z-index: 2;
+    background-color: #999999;
+    width: 200px;
+    height: 1000px;
+}
+.hamburger:hover .menu-content{
+    transform: translate3d(200px,0,0);
+    transition: 1s;
+}
+.menu-item{
+    list-style: none;
+    padding-bottom: 10%;
+}
+.menu-item a{
+    text-decoration: none;
+    color: white;
+}
+.menu-item a:hover{
+    font-weight: bold;
+}
+.title{
+    color: lightgreen;
+    font-weight: bold;
+    font-size: large;
+    display: inline-block;
+    margin-left: 10%;
+}
+.login{
+    display: inline-block;
+    border: lightgreen 2px solid;
+    border-radius:  5px;
+}
+.login:hover{
+    background-color: lightgreen;
+}
+.login a{
+    color: lightgreen;
+    text-decoration: none;
+    font-weight: bold;
+}
+.login a:hover{
+    color: white;
+}
+.search{
+    display: inline-block;
+    float: right;
+    position: relative;
+}
+.search-txt{
+    background:none;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: lightgreen 3px solid;
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 100%;
+    font-weight: bold;
+    font-size: large;
+}
+.search-btn{
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: calc(50% - 0px);
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.search-btn::before{
+    position: absolute;
+    content: '';
+    width: 15px;
+    height: 15px;
+    top: calc(50% - 9px);
+    left: calc(50% - 9px);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px lightgreen;
+}
+.search-btn::after{
+    position: absolute;
+    content: '';
+    width: 8px;
+    height: 6px;
+    top: calc(50% + 6px);
+    left: calc(50% + 2px);
+    border-top: solid 2px lightgreen;
+    transform: rotate(45deg);
+}
+.nav{
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    border-bottom: 1px solid lightgreen;
+    background: #111111;
+    opacity: 0.8;
+}
+.nav-item{
+    width: 20%;
+    list-style: none;
+    display: inline-block;
+    text-align: center;
+
+}
+.nav-item a:hover{
+    font-size: larger;
+}
+.nav-item a{
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.main{
+    width: 100%;
+    display: flex;
+    padding-bottom: 50%;
+}
+.left{
+    width: 80%;
+    margin-top: 100px;
+    color: white;
+    padding-left: 20px ;
+}
+.right{
+    color: white;
+    width: 20%;
+    margin-top: 100px;
+}
+
+.coach-card{
+    position: relative;
+    list-style: none;
+    width: 30%;
+    display: inline-block;
+}
+.coach-prof{
+    width: 100%;
+    height: 200px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+.prefecture{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-weight: bold;
+}
+.fee{
+    position: absolute;
+    top: 160px;
+    left: 20px;
+    color: white;
+    font-weight: bold;
+}
+.comment{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.left-img{
+    width: 50%;
+    display: inline;
+}
+.right-img{
+    width: 40%;
+    display: inline;
+    float: right;
+}
+.main-img{
+    width: 50%;
+    height: 300px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+.sub-img{
+    width: 40%;
+    height: 150px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+.student-prof-parent{
+    text-align: center;
+}
+.student-prof{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.yes{
+    display: none;
+}
+#main-table table{
+    width: 100%;
+}
+#main-table table tr{
+    height: 60px;
+}
+#main-table table tr td{
+    text-align: center;
+}
+.rental-btn{
+    text-align: center;
+}
+
+.all,.favo,.coach,.student{
+    cursor: pointer;
+}
+.coach-student,.all-favo{
+    width: calc(100% + 20px);
+    float: left;
+    display: flex;
+    position: relative;
+}
+.coach,.student,.all,.favo{
+    width: 50%;
+    text-align: center;
+    color: lightgreen;
+    font-weight: bold;
+}
+.coach-border,.all-border {
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    width: 50%;
+    border: 1px solid lightgreen;
+}
+.student-border,.favo-border {
+    position: absolute;
+    top: 100%;
+    left: calc(50% - 20px);
+    width: 50%;
+    border: 1px solid lightgreen;
+    display: none;
+}
+#student-page,#favo-page{
+    display: none;
+}
+
+.my-message{
+    color: lightgreen;
+}
+
+.form{
+    width: 100%;
+    text-align: center;
+}
+.form-item{
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 2px solid lightgreen;
+    background: none;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+}
+.form-item:focus{
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 2px solid lightgreen;
+    background: black;
+}
+.contact-txt{
+    background-color: lightgrey;
+    width: 90%;
+    height: 300px;
+    border-radius: 10px;
+}
+.form-btn{
+    border: lightgreen solid 2px;
+    color:lightgreen;
+    background: none;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: large;
+}
+.form-btn:hover{
+    background-color: lightgreen;
+    color: white;
+}
+.confirm{
+    font-weight: bold;
+    font-size: large;
+}
+
+.footer{
+    background-color: darkslategray;
+    text-align: center;
+}
+.footer-box{
+    display: inline-block;
+}
+.footer-item{
+    list-style: none;
+}
+.footer-item a{
+    color: white;
+    text-decoration: none;
+}
+.footer-item a:hover{
+    font-weight: bold;
+    color: grey;
+}
+
+
+
+
