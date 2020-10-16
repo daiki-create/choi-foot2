@@ -5,9 +5,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="../../js/jquery.min.js"></script>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
-    <script src="../../js/jquery.min.js"></script>
 </head>
 <body>
 <?php
@@ -36,36 +36,36 @@ include ('../../component/nav.php')
             <?php
             echo ("<input type='hidden' value='$student' id='student'>")
             ?>
-            <textarea class="message-item" id="content" cols="30" rows="1"></textarea>
-            <input class="message-btn" id="send" type="button" value="送信">
+            <input type="text " class="message-item" id="content">
+            <button onclick="send()" class="message-btn">送信</button>
         </form>
     </div>
     <div class="right">
         <?php include('../../component/pr.php');  ?>
     </div>
 </div>
+<?php
+include ('../../component/footer.php');
+?>
 <script>
-    $('#send').on('click',function(){
-        var data= {content:$('#content').val(),
-            mail:$('#student').val()};
-
+    function send(){
         $.ajax({
-            type:"POST",
+            type:"post",
             url:"send-coach-message.php",
             dataType:"json",
-            data:data,
-            success:function (){
-                console.log('success');
+            data:{content:$('#content').val(),
+                mail:$('#student').val()},
+            done:function(){
+                console.log("done");
             },
-            error:function (){
-                console.log('error');
+            fail:function () {
+                console.log("fail");
             }
         });
-        return false;
-    )}
+    }
 </script>
-<?php
-include ('../../component/footer.php')
-?>
+
+
+
 </body>
 </html>
