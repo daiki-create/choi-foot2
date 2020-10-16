@@ -14,23 +14,60 @@ include ('../../component/nav.php')
 ?>
 <div class="main">
     <div class="left">
-        <?php
-        session_start();
-        $me=$_SESSION['mail'];
-        $stmt=$pdo->query("select * from messages where receiver='$me'");
-        foreach ($stmt as $row){
-            $coach=$row['sender'];
-            echo ("
-            <div><a href='chat.php?mail=$coach'>$coach</a></div>
-            ");
-        }
-        ?>
+        <div class="coach-student">
+            <div class="student" onclick="click_student_border()">生徒</div>
+            <span class="student-border" id="student-border2"></span>
+            <div class="coach" onclick="click_coach_border()">コーチ</div>
+            <span class="coach-border" id="coach-border2"></span>
+        </div>
+        <br><br>
+        <div id="student-post">
+            <?php
+            session_start();
+            $me=$_SESSION['mail'];
+            $stmt=$pdo->query("select * from message_posts where student='$me'");
+            foreach ($stmt as $row){
+                $coach_name=$row['coach_name'];
+                $coach=$row['coach'];
+                echo ("
+                <br><div class='chat-list'><a href='student-chat.php?mail=$coach'>$coach_name</a></div>
+                ");
+            }
+            ?>
+        </div>
+
+        <div id="coach-post">
+            <?php
+            session_start();
+            $me=$_SESSION['mail'];
+            $stmt=$pdo->query("select * from message_posts where coach='$me'");
+            foreach ($stmt as $row){
+                $student_name=$row['student_name'];
+                $student=$row['student'];
+                echo ("<br><div class='chat-list'><a href='coach-chat.php?mail=$student'>$student_name</a></div>");
+            }
+             ?>
+        </div>
 
     </div>
     <div class="right">
         <?php include('../../component/pr.php');  ?>
     </div>
 </div>
+<script>
+    function click_coach_border(){
+        document.getElementById('coach-border2').style.cssText='display:block'
+        document.getElementById('student-border2').style.cssText='display:none'
+        document.getElementById('coach-post').style.cssText='display:block'
+        document.getElementById('student-post').style.cssText='display:none'
+    }
+    function click_student_border(){
+        document.getElementById('coach-border2').style.cssText='display:none'
+        document.getElementById('student-border2').style.cssText='display:block'
+        document.getElementById('coach-post').style.cssText='display:none'
+        document.getElementById('student-post').style.cssText='display:block'
+    }
+</script>
 <?php
 include ('../../component/footer.php')
 ?>
