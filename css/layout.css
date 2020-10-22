@@ -247,6 +247,7 @@ body{
 #main-table table tr td{
     text-align: center;
 }
+
 .rental-btn{
     text-align: center;
 }
@@ -266,14 +267,14 @@ body{
     color: lightgreen;
     font-weight: bold;
 }
-.coach-border,.all-border {
+.student-border,.student-border2,.all-border {
     position: absolute;
     top: 100%;
     left: -20px;
     width: 50%;
     border: 1px solid lightgreen;
 }
-.student-border,.favo-border {
+.coach-border,.coach-border2,.favo-border {
     position: absolute;
     top: 100%;
     left: calc(50% - 20px);
@@ -281,13 +282,65 @@ body{
     border: 1px solid lightgreen;
     display: none;
 }
-#student-page,#favo-page{
+#coach-page,#coach-post,#favo-page{
     display: none;
 }
 
-.my-message{
-    color: lightgreen;
+.chat-list{
+    width: 80%;
+    margin-left: 10%;
+    border-bottom: lightgreen solid 2px;
 }
+.chat-list a{
+    color: white;
+    margin-left: 20%;
+    font-weight: bold;
+    font-size: large;
+    text-decoration: none;
+}
+.chat-list a:hover{
+    color: #999999;
+}
+.my-message{
+    color: grey;
+    border: grey solid 2px;
+    border-radius: 20px;
+    padding: 10px;
+    width: 90%;
+}
+.coach-message{
+    color: lightgrey;
+    border: lightgrey solid 2px;
+    border-radius: 20px;
+    padding: 10px;
+    width: 90%;
+}
+.my-message div,.coach-message div{
+    font-weight: bold;
+    font-size: large;
+}
+.message-form{
+    width: 80%;
+    position: fixed;
+    bottom: 0;
+    z-index: 1030;
+    left: 10%;
+}
+.message-item{
+    width: 70%;
+    background-color: lightgrey;
+    border-radius: 20px;
+    border: none;
+    font-size: large;
+}
+.message-btn{
+    background-color: lightgrey;
+    font-weight: bold;
+    font-size: large;
+    width: 10%;
+    border-radius: 20px;
+}
+
 
 .form{
     width: 100%;
@@ -303,12 +356,28 @@ body{
     font-weight: bold;
     color: white;
 }
+.form-item2{
+    border: 2px solid lightgreen;
+    border-radius: 10px;
+    background: none;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+}
 .form-item:focus{
     border-top: none;
     border-right: none;
     border-left: none;
     border-bottom: 2px solid lightgreen;
     background: black;
+}
+.form-area{
+    border: 2px solid lightgreen;
+    border-radius: 20px;
+    background: none;
+    font-size: large;
+    font-weight: bold;
+    color: white;
 }
 .contact-txt{
     background-color: lightgrey;
@@ -332,6 +401,19 @@ body{
 .confirm{
     font-weight: bold;
     font-size: large;
+}
+
+.make-new-nav{
+    color: white;
+    font-size: large;
+    font-weight: bold;
+}
+.make-new{
+    color: white;
+    text-decoration: none;
+}
+.make-new:hover{
+    color: #999999;
 }
 
 .footer{

@@ -10,13 +10,11 @@
 </head>
 <body>
 <?php
+include ('../../component/nav.php');
 $date=$_POST['date'];
 $time=$_POST['time'];
 $util=$_POST['util'];
 $content=$_POST['content'];
-?>
-<?php
-include ('../../component/nav.php');
 $mail=$_POST['mail'];
 ?>
 <div class="main">
@@ -28,11 +26,15 @@ $mail=$_POST['mail'];
         <?php echo ("<div>$util 分</div>");?>
         <h1>教わりたい内容</h1>
         <?php echo ("<div>$content</div>");?>
-        <form action='done.php' method="post">
+        <form action='payment.php' method="post">
             <?php
-            echo ("<input type='hidden' value=$mail name='mail'>")
+            echo ("<input type='hidden' value=$mail name='mail'>
+                    <input type='hidden' value=$date name='date'>
+                    <input type='hidden' value=$time name='time'>
+                    <input type='hidden' value=$util name='util'>
+                    <input type='hidden' value=$content name='content'>")
             ?>
-            <input type='submit' value='確認'>
+            <input class="form-btn" type='submit' value='お支払いへ'>
         </form>
     </div>
     <div class="right">

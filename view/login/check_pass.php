@@ -10,6 +10,10 @@ $stmt=$pdo->query("select * from coaches where mail='$mail'");
 foreach ($stmt as $row){
     $correct_passwd=$row['passwd'];
 }
+$stmt=$pdo->query("select * from students where mail='$mail'");
+foreach ($stmt as $row){
+    $correct_passwd=$row['passwd'];
+}
 if ($passwd==$correct_passwd){
     session_start();
     $_SESSION['mail']=$mail;

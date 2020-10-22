@@ -7,6 +7,7 @@
 <head>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <script src="../../js/jquery.min.js"></script>
 </head>
 <body>
 <?php
@@ -15,10 +16,10 @@ include ('../../component/nav.php')
 <div class="main">
     <div class="left">
         <div class="coach-student">
-            <div class="coach" onclick="click_coach_border()">コーチ</div>
-            <span class="coach-border" id="coach-border"></span>
             <div class="student" onclick="click_student_border()">生徒</div>
             <span class="student-border" id="student-border"></span>
+            <div class="coach" onclick="click_coach_border()">コーチ</div>
+            <span class="coach-border" id="coach-border"></span>
         </div>
         <br>
         <br>
@@ -26,13 +27,14 @@ include ('../../component/nav.php')
             <?php
             session_start();
             $mail=$_SESSION['mail'];
-            $name='コーチアカウントはありません。';
+            $coach_name='コーチアカウントはありません。';
             $prof='no-image.jpg';
             $sub1='no-image.jpg';
             $sub2='no-image.jpg';
             $stmt=$pdo->query("select * from coaches where mail='$mail'");
             foreach ($stmt as $row){
-                $name=$row['name'];
+                $coach_name=$row['name'];
+                $coach=$row['mail'];
                 $prof=$row['prof'];
                 $movie1=$row['movie1'];
                 $movie2=$row['movie2'];
@@ -51,25 +53,43 @@ include ('../../component/nav.php')
                     <img class='sub-img' src='../../img/$sub1' alt=''>
                     <img class='sub-img' src='../../img/$sub2' alt=''>
                 </div>
-                <div>
-                    <h1>$name</h1>
-                    <p class='intro'>$intro</p>
-                    <h3>経歴</h3>
-                    <p>$career</p>
-                    <h3>振込先</h3>
-                    <p>銀行：</p>
-                    <p>支店：</p>
-                    <p>記号番号：</p>
-                </div>
+                <br><br>
+                <form action=''>
+                        <label for=''>ユーザー名：　　</label>
+                        <input class='form-item'type='text' value='$coach_name' ><br><br>
+                        
+                        <label for=''>メールアドレス：</label>
+                        <input class='form-item' type='text' value='$coach' ><br><br>
+                        
+                        <div>自己紹介：　　　</div>
+                        <textarea class='form-area' name='' id='' cols='30' rows='10'>$intro</textarea><br><br>
+                        
+                        <div>経歴：　　　　　</div>
+                        <textarea class='form-area' name='' id='' cols='30' rows='10'>$career</textarea><br><br>
+                        
+                        <label for=''>銀行名：　　　　</label>
+                        <input class='form-item' type='text'><br><br>
+                        
+                        <label for=''>支店名：　　　　</label>
+                        <input class='form-item' type='text'><br><br>
+                        
+                        <label for=''>記号番号：　　　</label>
+                        <input class='form-item' type='text'><br><br>
+                        
+                        <input class='form-btn'  style='float: right'type='submit' value='プロフィールを更新'>
+                </form>
+                <br><br>
                 <div id ='main-table'></div>
+                <button  class='form-btn' style='float: right' onclick='readTable()'>保存</button>
 
                 <script>
                      var table = document.createElement('table');
+                     table.id='table'
                      var date=new Date();
                      var today=date.getDate();
                      var month=date.getMonth();
                      var h3=document.createElement('h3');
-                     h3.textContent='一週間の予定';
+                     h3.textContent='出勤可能な日時(クリックで〇に変更して保存ボタン)';
                      document.getElementById('main-table').appendChild(h3);
                       for (var i = 0; i < 28; i++) {
                         var tr = document.createElement('tr');
@@ -84,7 +104,7 @@ include ('../../component/nav.php')
                                     th.textContent='';
                                 }
                                 else {
-                                     th.textContent = today+j+'日';
+                                     th.textContent = today+j-1+'日';
                                 }
                                 tr.appendChild(th);
                                 
@@ -94,8 +114,8 @@ include ('../../component/nav.php')
                                     td.textContent=parseInt(9+(i-1)/2)+':'+('0'+(i-1)%2*30).slice(-2);
                                 }
                                 else {
-                                    var no=document.createElement('div');
-                                    var yes=document.createElement('div');
+                                    const no=document.createElement('div');
+                                    const yes=document.createElement('div');
                                     no.textContent='-';
                                     yes.textContent='〇';
                                     
@@ -103,28 +123,29 @@ include ('../../component/nav.php')
                                     yes.style.cssText='display:none;' +
                                      'cursor:pointer';
                                     
-                                    no.id='no'+parseInt(i)+parseInt(j);
-                                    yes.id='yes'+parseInt(i)+parseInt(j);
-                                    
-                                   document.getElementById('no'+parseInt(i)+parseInt(j)).onclick=function(){
-                                        document.getElementById('no'+parseInt(i)+parseInt(j)).style.cssText='display:none';
-                                        document.getElementById('yes'+parseInt(i)+parseInt(j)).style.cssText='display:block';
+                                   no.onclick=function(){
+                                        no.style.cssText='display:none';
+                                        yes.style.cssText='display:block;cursor:pointer;';
                                     }
-                                  document.getElementById('yes'+parseInt(i)+parseInt(j)).onclick=function(){
-                                        document.getElementById('yes'+parseInt(i)+parseInt(j)).style.cssText='display:none';
-                                        document.getElementById('no'+parseInt(i)+parseInt(j)).style.cssText='display:block';
+                                    yes.onclick=function(){
+                                        yes.style.cssText='display:none';
+                                        no.style.cssText='display:block;cursor:pointer;';
                                     }
-                                    
+                                   
                                     td.appendChild(no);
                                     td.appendChild(yes);
-                                    }
+                                   
+                                }
                                 tr.appendChild(td);
+                                
                             }
                         }
                         table.appendChild(tr);
                         }
                           document.getElementById('main-table').appendChild(table);
                           
+                      
+                      
                 </script>
                 
                
@@ -132,26 +153,74 @@ include ('../../component/nav.php')
             ");
 
             ?>
+            <script>
+                function readTable(){
+                    var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定
+                    var table = document.getElementById('table');//id=table1という要素を取得
+                    var data_csv="";//ここに文字データとして値を格納していく
+
+                    for(var i = 0;  i < table.rows.length; i++){
+                        for(var j = 0; j < table.rows[i].cells.length; j++){
+                            data_csv += table.rows[i].cells[j].innerText;//HTML中の表のセル値をdata_csvに格納
+                            if(j === table.rows[i].cells.length-1){
+                                data_csv += 'nn';
+                            }
+                            else {
+                                data_csv += ",";
+                            }//セル値の区切り文字として,を追加
+                        }
+                    }
+                    var blob = new Blob([ bom, data_csv], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
+                    $.ajax({
+                        type:"post",
+                        url:"save-schedule.php",
+                        dataType:"json",
+                        data:{data_csv:data_csv},
+                    done:function (){
+                        console.log("done");
+                    },
+                    fail:function (){
+                        console.log('fail');
+                    }
+                });
+                }
+            </script>
         </div>
         <div id="student-page">
             <?php
             $prof2='no-image.jpg';
-            $name2='生徒アカウントはありません。';
-            $stmt2=$pdo->query("select * from students where mail='$mail'");
-            foreach ($stmt2 as $row){
-                $name2=$row['name'];
+            $student_name='生徒アカウントはありません。';
+            $stmt=$pdo->query("select * from students where mail='$mail'");
+            foreach ($stmt as $row){
+                $student_name=$row['name'];
                 $prof2=$row['prof'];
-                $mail2=$row['mail'];
+                $student=$row['mail'];
             }
             echo ("<div class='student-prof-parent'>
                         <img src='../../img/$prof2' alt='' class='student-prof'>
                     </div>
-                    <h1 style='text-align: center'>$name2</h1>
-                    <div>メールアドレス：$mail2</div>
-                    <h3>決済情報</h3>
-                    <p>カード番号：</p>
-                    <p>有効期限：</p>
-                    <p>セキュリティコード：</p>
+                    <br><br>
+                    <form action=\"\">
+                        <label for=''>ユーザー名：　　　　</label>
+                        <input class='form-item' type='text' value=$student_name><br><br>
+                        
+                        <label for=''>メールアドレス：　　</label>
+                        <input class='form-item' type='text' value=$student><br><br>
+                        
+                        <label for=''>カード番号：　　　　</label>
+                        <input class='form-item' type='text'><br><br>
+                        
+                        <label for=''>有効期限：　　　　　</label>
+                        <input class='form-item' type='text'><br><br>
+                        
+                        <label for=''>セキュリティコード：</label>
+                        <input class='form-item' type='text'><br><br>
+                        
+                        <input class='form-btn' style='float: right' type='submit' value='プロフィールを更新'>
+
+                        
+                        
+</form>
             ");
             ?>
         </div>

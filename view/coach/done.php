@@ -10,25 +10,62 @@
 </head>
 <body>
 <?php
-session_start();
 include ('../../component/nav.php');
-$mail=$_POST['mail'];
-$stmt=$pdo->prepare("insert into messages (sender,receiver,content) values (:sender,:receiver,:content)");
+
+session_start();
+$me=$_SESSION['mail'];
+$coach=$_POST['mail'];
+$date=$_POST['date'];
+$time=$_POST['time'];
+$util=$_POST['util'];
+$content=$_POST['content'];
+
+$stmt=$pdo->query("select * from coaches where mail='$coach'");
+foreach ($stmt as $row){
+    $coach_name=$row['name'];
+}
+
+$stmt=$pdo->query("select * from students where mail='$me'");
+foreach ($stmt as $row){
+    $student_name=$row['name'];
+}
+
+$stmt=$pdo->prepare("insert into messages (sender,receiver,content,sender_name) values (:sender,:receiver,:content,:sender_name)");
 $params=array(
-        ':sender'=>$mail,
+        ':sender'=>$coach,
         ':receiver'=>$_SESSION['mail'],
-        ':content'=>'仮予約を受け付けました。'
+        ':content'=>'予約を受け付けました。',
+        ':sender_name'=>$coach_name
+);
+$stmt->execute($params);
+
+$stmt=$pdo->prepare("insert into message_posts (coach,student,coach_name,student_name) values (:coach,:student,:coach_name,:student_name)");
+$params=array(
+        ':coach'=>$coach,
+        'student'=>$me,
+        ':coach_name'=>$coach_name,
+        'student_name'=>$student_name
+);
+$stmt->execute($params);
+
+$stmt=$pdo->prepare("insert into lessons (coach,student,coach_name,student_name,date,time,util,content) values (:coach,:student,:coach_name,:student_name,:date,:time,:util,:content)");
+$params=array(
+    ':coach'=>$coach,
+    'student'=>$me,
+    ':coach_name'=>$coach_name,
+    'student_name'=>$student_name,
+    ':date'=>$date,
+    ':time'=>$time,
+    ':util'=>$util,
+    ':content'=>$content
 );
 $stmt->execute($params);
 
 ?>
 <div class="main">
     <div class="left">
-        <h1>仮予約完了</h1>
-        <p>**まだ予約は完了していません。**<br><br>
-            コーチに申し込みメッセージを送信しました。<br>
-            チャットよりコーチから返信が届きますので今しばらくお待ちください。<br>
-            返信には数日かかることがございます。</p>
+        <h1>予約完了</h1>
+        <p>練習の詳細につきましてはチャットよりコーチと連絡を取ってください。</p>
     </div>
     <div class="right">
         <?php include('../../component/pr.php');  ?>

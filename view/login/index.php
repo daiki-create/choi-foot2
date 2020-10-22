@@ -21,7 +21,10 @@ include ('../../component/nav.php');
         <form class="form" action="check_pass.php" method="post">
             <input class="form-item" type="email" name="mail" placeholder="メールアドレス"><br><br>
             <input class="form-item" type="password" name="passwd" placeholder="パスワード"><br><br>
-            <input class="form-btn" type="submit" value="ログイン">
+            <input class="form-btn" type="submit" value="ログイン"><br><br>
+            <div class="make-new-nav">アカウントをお持ちでない方</div>
+            <a class="make-new" href="../use/index.php"><生徒アカウントを作成></生徒アカウントを作成></a>
+            <a class="make-new" href="../recruit/index.php"><コーチアカウントを作成></コーチアカウントを作成></a>
         </form>
     </div>
     <div class="right">

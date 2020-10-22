@@ -26,6 +26,7 @@ include ('../../component/nav.php')
             $sub1=$row['sub1'];
             $sub2=$row['sub2'];
             $intro=$row['intro'];
+            $schedule=$row['schedule'];
 
 
             echo ("
@@ -47,80 +48,45 @@ include ('../../component/nav.php')
                     <h1>$name</h1>
                     <p class='intro'>$intro</p>
                 </div>
-                <form class='form' action='form.php' method='post'>
-                    <input type='hidden' value=$mail name='mail'>
-                    <input class='form-btn' type='submit' value='レンタル'>
-                </form>
-                <div id ='main-table'></div>
-                
+                <div id='main-table'><table id='schedule'></table></div>
                 <script>
-                     var table = document.createElement('table');
-                     var date=new Date();
-                     var today=date.getDate();
-                     var month=date.getMonth();
-                     var h1=document.createElement('h1');
-                     h1.textContent='一週間の予定';
-                     document.getElementById('main-table').appendChild(h1);
-                      for (var i = 0; i < 28; i++) {
-                        var tr = document.createElement('tr');
-                        if (i%2===0){
+                    const output_csv = document.getElementById('schedule');
+                    function csv_array(data) {
+                        const dataArray = []; //配列を用意
+                        const dataString = data.split('nn'); //改行で分割
+                        for (let i = 0; i < dataString.length-1; i++) { //あるだけループ
+                            dataArray[i] = dataString[i].split(',');
                         }
-                        else {
-                        }
-                        for (var j = 0; j < 8; j++) {
-                            if(i === 0) {
-                                var th = document.createElement('th');
-                                if (j===0){
-                                    th.textContent='';
-                                }
-                                else {
-                                     th.textContent = today+j+'日';
-                                }
-                                tr.appendChild(th);
-                                
-                            } else {
-                                var td = document.createElement('td');
-                                if (j===0){
-                                    td.textContent=parseInt(9+(i-1)/2)+':'+('0'+(i-1)%2*30).slice(-2);
-                                }
-                                else {
-                                    var no=document.createElement('div');
-                                    var yes=document.createElement('div');
-                                    no.textContent='-';
-                                    yes.textContent='〇';
-                                    
-                                    no.style.cssText='cursor:pointer;'
-                                    yes.style.cssText='display:none;' +
-                                     'cursor:pointer';
-                                    
-                                    no.id='no'+'i'+'j';
-                                    yes.id='yes'+'i'+'j';
-                                    
-                                    no.onclick=function toggle_no(){
-                                                    document.getElementById('no').style.cssText='display:none';
-                                                    document.getElementById('yes').style.cssText='display:block';
-                                                }
-                                    yes.onclick=function toggle_yes(){
-                                                    document.getElementById('yes').style.cssText='display:none';
-                                                    document.getElementById('no').style.cssText='display:block';
-                                                }
-                                    
-                                    td.appendChild(no);
-                                    td.appendChild(yes);
+                        var wak = \"\";
+                        for (i = 0; i < dataArray.length; i++) {
+                            wak += \"<tr>\";
+                            for (j = 0; j < dataArray[i].length; j++) {
+                                if (i===0 || j===0){
+                                    wak += \"<td>\";
+                                    wak += dataArray[i][j];
+                                    wak += \"</td>\";
+                                }else {
+                                    if (dataArray[i][j]==='〇'){
+                                        wak += \"<td><a href='form.php?day=\"+dataArray[0][j]+\"&time=\"+dataArray[i][0]+\"&mail=$mail' style='text-decoration:none;color:white'>\";
+                                        wak += dataArray[i][j];
+                                        wak += \"</a></td>\";
+                                    }else {
+                                        wak += \"<td>\";
+                                        wak += dataArray[i][j];
+                                        wak += \"</td>\";
                                     }
-                                tr.appendChild(td);
+                                    
+                                }
+                                
                             }
+                            wak +='</tr>';
                         }
-                        table.appendChild(tr);
-                        }
-                      document.getElementById('main-table').appendChild(table);
+                        output_csv.innerHTML = wak; //表示
+                        console.log(dataArray);
+                    }
+                    csv_array('$schedule');
                 </script>
                 
-                <form class='form' action='form.php' method='post'>
-                    <input type='hidden' value=$mail name='mail'>
-                    <input class='form-btn' type='submit' value='レンタル'>
-                </form>
-
             ");
         }
         ?>
