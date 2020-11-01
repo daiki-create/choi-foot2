@@ -17,32 +17,32 @@
                     <li class="menu-item"><a href="../view/use/index.php">ご利用について</a></li>
                     <li class="menu-item"><a href="../view/recruit/index.php">コーチ募集</a></li>
                     <li class="menu-item"><a href="../view/contact/index.php">お問い合わせ</a></li>
+                    <li class="menu-item"><a href="../view/contact/index.php">利用規約</a></li>
+                    <li class="menu-item"><a href="../view/contact/index.php">プライバシーポリシー</a></li>
+                    <li class="menu-item"><a href="../view/retire/index.php">退会</a></li>
                 </ul>
             </div>
         </div>
         <div class="title">ちょいふっと</div>
         <?php
         session_start();
-if ($_SESSION["flag"]===true){
-    echo "<div class='login' ><a href='login/logout.php'>ログアウト</a></div>";
-}else{
-    echo "<div class='login'><a href='login/index.php'>ログイン</a></div> ";
-}
-?>
-        <form class="search" action="" role="search">
-            <input class="search-txt" placeholder="search" type="text" id="search-txt">
-            <button class="search-btn" type="button" onclick="click_search_btn()"></button>
+        if ($_SESSION["flag"]===true){
+            echo "<div class='login' ><a href='login/logout.php'>ログアウト</a></div>";
+        }else{
+            echo "<div class='login'><a href='login/index.php'>ログイン</a></div> ";
+        }
+        ?>
+        <form class="search" action="search/index.php" method="post">
+            <input name="search-txt" class="search-txt" placeholder="search" type="text" id="search-txt">
+            <button id="search-btn" class="search-btn" type="button" onclick="click_search_btn()"></button>
+            <button id="search-btn2" style="display: none;" class="search-btn" type="submit"></button>
         </form>
         <script>
-            var count=0;
+        var count=0;
             function click_search_btn(){
-                count++;
-                if (count%2===1){
-                    document.getElementById('search-txt').style.cssText='display:block'
-                }else {
-                    document.getElementById('search-txt').style.cssText='display:none'
-                }
-
+                document.getElementById('search-txt').style.cssText='display:block'
+                document.getElementById('search-btn2').style.cssText='display:block'
+                document.getElementById('search-btn').style.cssText='display:none'
             }
         </script>
     </div>
@@ -63,6 +63,9 @@ if ($_SESSION["flag"]===true){
         </div>
         <br>
         <br>
+        <?php
+        echo $_GET['message'];;
+        ?>
         <div id="all-page">
             <?php
             $stmt=$pdo->query('select * from coaches');

@@ -21,13 +21,13 @@ $mail=$_POST['mail'];
 <div class="main">
     <div class="left">
         <p>カード会社</p>
-        <select name="" id="" class="form-item2">
-            <option style="background-color: black" value="">選択してください</option>
-            <option style="background-color: black" value="">VISA</option>
-            <option style="background-color: black" value="">MASTER</option>
-            <option style="background-color: black" value="">JCB</option>
-            <option style="background-color: black" value="">Diners</option>
-            <option style="background-color: black" value="">AMEX</option>
+        <select style="background-color: black" name="" id="" class="form-item2">
+            <option value="">選択してください</option>
+            <option value="">VISA</option>
+            <option value="">MASTER</option>
+            <option value="">JCB</option>
+            <option value="">Diners</option>
+            <option value="">AMEX</option>
         </select>
         <p>カード番号</p>
         <input  class="cardnumber form-item2" size="4" maxlength="4" required="required" type="text" id="CreditcardCcNumber1"/> -

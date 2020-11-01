@@ -6,17 +6,22 @@
 </head>
 <body>
 <?php
-include ('../../component/nav.php')
+include ('../../component/nav.php');
+session_start();
+$mail=$_SESSION['mail'];
 ?>
 <div class="main">
     <div class="left">
         <div>
             <h1>お問い合わせ</h1>
-            <p>お問い合わせお問い合わせお問い合わせお問い合わせお問い合わせお問い合わせお問い合わせお問い合わせお問い合わせ</p>
+            <p>わからないことなどがあればこちらのフォームよりご連絡ください。なお迷惑行為が認められた場合はご利用を停止させていただくことがごさいます。</p>
         </div>
-        <form class="form" action="done.php">
-            <textarea class="contact-txt" name="" id="" cols="30" rows="10"></textarea><br>
-            <input class="form-btn" type="button" value="送信">
+        <form class="form" action="done.php" method="post">
+            <?php
+            echo ("<input type='hidden' name='mail' value='$mail'>");
+            ?>
+            <textarea class="contact-txt" name="" id="content" cols="30" rows="10"></textarea><br>
+            <input class="form-btn" type="submit" value="送信">
         </form>
     </div>
     <div class="right">

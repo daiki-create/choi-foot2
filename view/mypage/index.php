@@ -23,6 +23,9 @@ include ('../../component/nav.php')
         </div>
         <br>
         <br>
+        <?php
+        echo $_GET['message'];
+        ?>
         <div id="coach-page">
             <?php
             session_start();
@@ -35,6 +38,10 @@ include ('../../component/nav.php')
             foreach ($stmt as $row){
                 $coach_name=$row['name'];
                 $coach=$row['mail'];
+                $passwd=$row['passwd'];
+                $prefecture=$row['prefecture'];
+                $fee=$row['fee'];
+                $comment=$row['comment'];
                 $prof=$row['prof'];
                 $movie1=$row['movie1'];
                 $movie2=$row['movie2'];
@@ -54,30 +61,58 @@ include ('../../component/nav.php')
                     <img class='sub-img' src='../../img/$sub2' alt=''>
                 </div>
                 <br><br>
-                <form action=''>
-                        <label for=''>ユーザー名：　　</label>
-                        <input class='form-item'type='text' value='$coach_name' ><br><br>
+                <form action='update-coach.php' method='post'>
+                        <label for=''>ユーザー名：　　　　　</label>
+                        <input name='name' class='form-item'type='text' value='$coach_name' ><br><br>
                         
-                        <label for=''>メールアドレス：</label>
-                        <input class='form-item' type='text' value='$coach' ><br><br>
+                        <label for=''>メールアドレス：　　　</label>
+                        <input name='mail' class='form-item' type='text' value='$coach' ><br><br>
+                        
+                        <label for=''>パスワード：　　　　　</label>
+                        <input name='passwd' class='form-item' type='password' value='$passwd' ><br><br>
+                        
+                        <label for=''>パスワード（確認）：　</label>
+                        <input name='passwd2' class='form-item' type='password' value='$passwd' ><br><br>
+                        
+                        <p>**メールアドレスとパスワードの変更は生徒アカウントと連動します。</p><br><br>
+                        
+                        <label for=''>都道府県：　　　　　　</label>
+                        <select style=\"background-color: black\" class='form-item2' name='prefecture' id='prefecture' class='form-item'>
+                            <option value='$prefecture'>$prefecture</option>
+                        </select><br><br>
+                        
+                        <label for=''>料金/30分：　　　　　</label>
+                        <input name='fee' class='form-item' type='text' value='$fee' ><br><br>
+                        
+                        <label for=''>コメント：　　　　　　</label>
+                        <input name='comment' class='form-item' type='text' value='$comment' ><br><br>
                         
                         <div>自己紹介：　　　</div>
-                        <textarea class='form-area' name='' id='' cols='30' rows='10'>$intro</textarea><br><br>
+                        <textarea class='form-area' name='intro' cols='30' rows='10'>$intro</textarea><br><br>
                         
                         <div>経歴：　　　　　</div>
-                        <textarea class='form-area' name='' id='' cols='30' rows='10'>$career</textarea><br><br>
+                        <textarea class='form-area' name='career' cols='30' rows='10'>$career</textarea><br><br>
                         
-                        <label for=''>銀行名：　　　　</label>
-                        <input class='form-item' type='text'><br><br>
+                        <h3>給与振込口座</h3>
+                        <label for=''>銀行名：　　　　　　　</label>
+                        <input name='bank' class='form-item' type='text'><br><br>
                         
-                        <label for=''>支店名：　　　　</label>
-                        <input class='form-item' type='text'><br><br>
+                        <label for=''>支店名：　　　　　　　</label>
+                        <input name='branch' class='form-item' type='text'><br><br>
                         
-                        <label for=''>記号番号：　　　</label>
-                        <input class='form-item' type='text'><br><br>
-                        
+                        <label for=''>記号番号：　　　　　　</label>
+                        <input name='number' class='form-item' type='text'><br><br>
+                                                
                         <input class='form-btn'  style='float: right'type='submit' value='プロフィールを更新'>
                 </form>
+                <script >
+                    var prefecture=Array('富山','石川','福井');
+                    for (i=0;i<prefecture.length;i++){
+                        option=document.createElement(\"option\");
+                        option.innerText=prefecture[i];
+                        document.getElementById('prefecture').appendChild(option);
+                    }
+                </script>
                 <br><br>
                 <div id ='main-table'></div>
                 <button  class='form-btn' style='float: right' onclick='readTable()'>保存</button>
@@ -193,34 +228,64 @@ include ('../../component/nav.php')
             $stmt=$pdo->query("select * from students where mail='$mail'");
             foreach ($stmt as $row){
                 $student_name=$row['name'];
+                $student=$row['mail'];
+                $passwd2=$row['passwd'];
                 $prof2=$row['prof'];
                 $student=$row['mail'];
             }
-            echo ("<div class='student-prof-parent'>
+            echo ("
+                    <div class='student-prof-parent'>
                         <img src='../../img/$prof2' alt='' class='student-prof'>
+                        <label for='prof-form' class='prof-label'>
+                            編集
+                            <input type='file' id='prof-form' style='display:none;'>
+                        </label> 
+                                           
                     </div>
+                    <script>
+                        document.getElementById('prof-form').onchange=function (){
+                            var student_prof=document.getElementById('prof-form').value;
+                            $.ajax({
+                                type:'post',
+                                enctype:'multipart/form-data',
+                                url:'edit-prof.php',
+                                dataType:'json',
+                                data:{
+                                    student_prof:student_prof
+                                },
+                                processData: false,
+                                contentType: false,
+                                cache: false,
+                                timeout: 600000,
+                                done:function (){
+                                    console.log('done')
+                                },
+                                fail:function (){
+                                    console.log('fail')
+                                }
+                               
+                            })
+                        }
+                    </script>
                     <br><br>
-                    <form action=\"\">
-                        <label for=''>ユーザー名：　　　　</label>
-                        <input class='form-item' type='text' value=$student_name><br><br>
+                    <form action=\"update-student.php\" method='post'>
+                        <label for=''>ユーザー名：　　　　　　</label>
+                        <input name='name' class='form-item' type='text' value=$student_name><br><br>
                         
-                        <label for=''>メールアドレス：　　</label>
-                        <input class='form-item' type='text' value=$student><br><br>
+                        <label for=''>メールアドレス：　　　　</label>
+                        <input name='mail' class='form-item' type='text' value=$student><br><br>
                         
-                        <label for=''>カード番号：　　　　</label>
-                        <input class='form-item' type='text'><br><br>
+                        <label for=''>パスワード：　　　　　　</label>
+                        <input name='passwd' class='form-item' type='password' value=$passwd2><br><br>
                         
-                        <label for=''>有効期限：　　　　　</label>
-                        <input class='form-item' type='text'><br><br>
+                        <label for=''>パスワード（確認）：　　</label>
+                        <input name='passwd2' class='form-item' type='password' value=$passwd2><br><br>
                         
-                        <label for=''>セキュリティコード：</label>
-                        <input class='form-item' type='text'><br><br>
+                        <p>**メールアドレスとパスワードの変更はコーチアカウントと連動します。</p><br><br>
                         
                         <input class='form-btn' style='float: right' type='submit' value='プロフィールを更新'>
 
-                        
-                        
-</form>
+                    </form>
             ");
             ?>
         </div>

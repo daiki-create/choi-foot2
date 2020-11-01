@@ -101,6 +101,7 @@ body{
     right: 100%;
     font-weight: bold;
     font-size: large;
+    color: white;
 }
 .search-btn{
     position: absolute;
@@ -234,6 +235,14 @@ body{
     height: 300px;
     object-fit: cover;
     border-radius: 50%;
+}
+.prof-label{
+    background: lightgreen;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    font-weight: bold;
+    font-size: large;
 }
 .yes{
     display: none;
@@ -414,6 +423,13 @@ body{
 }
 .make-new:hover{
     color: #999999;
+}
+
+.lesson-card{
+    border: solid lightgreen 2px;
+    border-radius: 10px;
+    padding: 10px;
+    width: 80%;
 }
 
 .footer{

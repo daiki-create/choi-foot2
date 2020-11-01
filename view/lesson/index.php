@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="../../js/jquery.min.js"></script>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
 </head>
@@ -22,22 +23,48 @@ include ('../../component/nav.php')
         </div>
         <br><br>
         <div id="student-post">
+            <div id="message"></div>
             <?php
             session_start();
             $me=$_SESSION['mail'];
-
+            $i=0;
             $stmt=$pdo->query("select * from lessons where student='$me'");
             foreach ($stmt as $row){
+                $i++;
                 $coach_name=$row['coach_name'];
+                $coach=$row['coach'];
                 $date=$row['date'];
                 $time=$row['time'];
                 $content=$row['content'];
                 echo ("
-                <div class='lesson-card'>
+                <div class='lesson-card' id='lesson-card$i'>
                     <h1>$coach_name</h1>
                     <p>$date $time</p>
                     <p>$content</p>
+                    <button class='cancel-btn' id='cancel-btn$i'>予約取り消し</button>
                 </div>
+                <script>
+                    document.getElementById('cancel-btn$i').onclick=function (){
+                        var result=window.confirm('$coach_name コーチの予約をキャンセルしてもよろしいですか？');
+                        if (result){
+                            document.getElementById('lesson-card$i').style.cssText='display:none'
+                            $.ajax({
+                                type:\"post\",
+                                url:\"cancel.php\",
+                                dataType:\"json\",
+                                data:{mail:'$coach'},
+                                done:function (){
+                                    console.log(\"done\");
+                                    document.getElementById('message').textContent='コーチの予約をキャンセルしました。'  
+                                },
+                                fail:function (){
+                                    console.log('fail');
+                                    document.getElementById('message').textContent='コーチの予約をキャンセルに失敗しました。'  
+                                }
+                            });
+                        }
+                    }
+                </script>
             ");
             }
             ?>
@@ -61,6 +88,7 @@ include ('../../component/nav.php')
             }
             ?>
         </div>
+
 
     </div>
     <div class="right">
