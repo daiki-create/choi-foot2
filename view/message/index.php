@@ -7,6 +7,8 @@
 <head>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -15,9 +17,9 @@ include ('../../component/nav.php')
 <div class="main">
     <div class="left">
         <div class="coach-student">
-            <div class="student" onclick="click_student_border()">生徒</div>
+            <div class="student" onclick="click_student_border()">生徒ページ</div>
             <span class="student-border" id="student-border2"></span>
-            <div class="coach" onclick="click_coach_border()">コーチ</div>
+            <div class="coach" onclick="click_coach_border()">コーチページ</div>
             <span class="coach-border" id="coach-border2"></span>
         </div>
         <br><br>
@@ -32,6 +34,9 @@ include ('../../component/nav.php')
                 echo ("
                 <br><div class='chat-list'><a href='student-chat.php?mail=$coach'>$coach_name</a></div>
                 ");
+                if ($coach==null){
+                    echo "<div style='color: white'>メッセージはありません。</div>";
+                }
             }
             ?>
         </div>
@@ -45,6 +50,9 @@ include ('../../component/nav.php')
                 $student_name=$row['student_name'];
                 $student=$row['student'];
                 echo ("<br><div class='chat-list'><a href='coach-chat.php?mail=$student'>$student_name</a></div>");
+                if ($student==null){
+                    echo "<div style='color: white'>メッセージはありません。</div>";
+                }
             }
              ?>
         </div>

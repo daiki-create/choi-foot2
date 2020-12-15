@@ -1,23 +1,28 @@
 <?php
 
 
-include "../../component/head.php";
+include ("../../component/head.php");
 session_start();
 $me=$_SESSION['mail'];
-$name=$_POST['name'];
-$mail=$_POST['mail'];
-$passwd=$_POST['passwd'];
-$passwd2=$_POST['passwd2'];
-$prefecture=$_POST['prefecture'];
-$fee=$_POST['fee'];
-$comment=$_POST['comment'];
-$intro=$_POST['intro'];
-$career=$_POST['career'];
-$bank=$_POST['bank'];
-$branch=$_POST['branch'];
-$number=$_POST['number'];
+$name=htmlentities($_POST['name']);
+$mail=htmlentities($_POST['mail']);
+$passwd=htmlentities($_POST['passwd']);
+$passwd2=htmlentities($_POST['passwd2']);
+$prefecture=htmlentities($_POST['prefecture']);
+$fee=htmlentities($_POST['fee']);
+$comment=htmlentities($_POST['comment']);
+$intro=htmlentities($_POST['intro']);
+$career=htmlentities($_POST['career']);
+$bank=htmlentities($_POST['bank']);
+$branch=htmlentities($_POST['branch']);
+$number=htmlentities($_POST['number']);
+$locate=htmlentities($_POST['locate']);
 
-$stmt=$pdo->prepare("update coaches set name=:name, mail=:mail, passwd=:passwd, prefecture=:prefecture, fee=:fee, comment=:comment, intro=:intro, career=:career, bank=:bank, branch=:branch, number=:number where mail=:me");
+if($passwd!=$passwd2) {
+    $error = "確認パスワードが一致しません。";
+    header("location:index.php?error=$error");
+}
+    $stmt=$pdo->prepare("update coaches set name=:name, mail=:mail, passwd=:passwd, prefecture=:prefecture, fee=:fee, comment=:comment, intro=:intro, career=:career, bank=:bank, branch=:branch, number=:number,locate=:locate where mail=:me");
 $params=array(
     ':name'=>$name,
     ':mail'=>$mail,
@@ -30,6 +35,7 @@ $params=array(
     ':bank'=>$bank,
     ':branch'=>$branch,
     ':number'=>$number,
+    ':locate'=>$locate,
     ':me'=>$me
 );
 

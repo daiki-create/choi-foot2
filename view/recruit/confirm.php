@@ -5,6 +5,8 @@
 <head>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -13,10 +15,10 @@ include ('../../component/nav.php')
 <div class="main">
     <div class="left">
         <?php
-        $mail=$_POST['mail'];
-        $name=$_POST['name'];
-        $passwd=$_POST['passwd'];
-        $passwd2=$_POST['passwd2'];
+        $mail=htmlentities($_POST['mail']);
+        $name=htmlentities($_POST['name']);
+        $passwd=htmlentities($_POST['passwd']);
+        $passwd2=htmlentities($_POST['passwd2']);
         if ($passwd!=$passwd2){
             $error="パスワードが一致しません。";
             header("location: personal.php?error=$error&mail=$mail");
@@ -24,6 +26,16 @@ include ('../../component/nav.php')
         }
         if($name==null or $passwd==null){
             $error="未入力の欄があります。";
+            header("location: personal.php?error=$error&mail=$mail");
+            exit();
+        }
+        if (strlen(trim($name))>20){
+            $error="ユーザー名は20文字以下です。";
+            header("location: personal.php?error=$error&mail=$mail");
+            exit();
+        }
+        if (strlen(trim($passwd))>20){
+            $error="パスワードは20文字以下です。";
             header("location: personal.php?error=$error&mail=$mail");
             exit();
         }

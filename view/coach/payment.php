@@ -6,14 +6,23 @@
 <html lang="en">
 <head>
     <script src="../../js/jquery.min.js"></script>
-    <?php include('../../component/head.php');  ?>
+    <?php include('../../component/head.php');
+    session_start();
+    if ($_SESSION['student']!=true){
+        $uli=$_SERVER['HTTP_REFERER'];
+        $message='生徒アカウントでログイン後にご利用いただけます。';
+        header("location:".$uli."&message=$message");
+    }?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
 include ('../../component/nav.php');
 $date=$_POST['date'];
 $time=$_POST['time'];
+$locate=$_POST['locate'];
 $util=$_POST['util'];
 $content=$_POST['content'];
 $mail=$_POST['mail'];
@@ -80,6 +89,7 @@ $mail=$_POST['mail'];
             echo ("<input type='hidden' value=$mail name='mail'>
                     <input type='hidden' value=$date name='date'>
                     <input type='hidden' value=$time name='time'>
+                    <input type='hidden' value=$locate name='locate'>
                     <input type='hidden' value=$util name='util'>
                     <input type='hidden' value=$content name='content'>")
             ?>

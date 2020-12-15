@@ -5,7 +5,7 @@
 include '../../component/head.php';
 session_start();
 $me=$_SESSION['mail'];
-$coach=$_POST['mail'];
+$coach=htmlentities($_POST['mail']);
 
 $stmt=$pdo->prepare("delete from lessons where coach='$coach' and student='$me'");
 $stmt->execute();

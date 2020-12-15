@@ -5,8 +5,13 @@
 include "../../component/head.php";
 session_start();
 $coach=$_SESSION['mail'];
-$student=$_POST['mail'];
-$content=$_POST['content'];
+$student=htmlentities($_POST['mail']);
+$content=htmlentities($_POST['content']);
+if (strlen($content)>400){
+    $error="メッセージは400文字までです。";
+    header("location:#?error=$error");
+    exit();
+}
 $coach_name='';
 $stmt=$pdo->query("select * from coaches where mail='$coach'");
 foreach ($stmt as $row){

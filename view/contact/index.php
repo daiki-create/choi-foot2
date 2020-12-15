@@ -3,6 +3,8 @@
 <head>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">a
 </head>
 <body>
 <?php
@@ -20,7 +22,7 @@ $mail=$_SESSION['mail'];
             <?php
             echo ("<input type='hidden' name='mail' value='$mail'>");
             ?>
-            <textarea class="contact-txt" name="" id="content" cols="30" rows="10"></textarea><br>
+            <textarea class="contact-txt" name="content" id="content" cols="30" rows="10"></textarea><br>
             <input class="form-btn" type="submit" value="送信">
         </form>
     </div>

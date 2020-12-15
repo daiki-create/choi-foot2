@@ -5,8 +5,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include('../../component/head.php');  ?>
+    <?php include('../../component/head.php');
+    session_start();
+    if ($_SESSION['student']!=true){
+        $uli=$_SERVER['HTTP_REFERER'];
+        $message='生徒アカウントでログイン後にご利用いただけます。';
+        header("location:".$uli."&message=$message");
+    }?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -14,8 +22,11 @@ include ('../../component/nav.php');
 $date=$_POST['date'];
 $time=$_POST['time'];
 $util=$_POST['util'];
+$locate=$_POST['locate'];
+$fee=$_POST['fee'];
 $content=$_POST['content'];
 $mail=$_POST['mail'];
+$total=$fee*$util/30;
 ?>
 <div class="main">
     <div class="left">
@@ -24,17 +35,21 @@ $mail=$_POST['mail'];
         <?php echo ("<div>$date $time</div>");?>
         <h1>利用時間</h1>
         <?php echo ("<div>$util 分</div>");?>
+        <h1>レッスン料金</h1>
+        <?php echo ("<div>$total 円</div>");?>
         <h1>教わりたい内容</h1>
         <?php echo ("<div>$content</div>");?>
-        <form action='payment.php' method="post">
+        <form action='done.php' method="post">
             <?php
             echo ("<input type='hidden' value=$mail name='mail'>
                     <input type='hidden' value=$date name='date'>
                     <input type='hidden' value=$time name='time'>
+                    <input type='hidden' value=$locate name='locate'>
+                    <input type='hidden' value=$fee name='fee'>
                     <input type='hidden' value=$util name='util'>
                     <input type='hidden' value=$content name='content'>")
             ?>
-            <input class="form-btn" type='submit' value='お支払いへ'>
+            <input class="form-btn" type='submit' value='OK'>
         </form>
     </div>
     <div class="right">

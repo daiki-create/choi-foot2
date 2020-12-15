@@ -7,14 +7,17 @@
 <head>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
-include ('../../component/nav.php')
+include ('../../component/nav.php');
 ?>
 <div class="main">
     <div class="left">
         <?php
+        echo $_GET['message'];
         $id=$_GET['id'];
         $stmt=$pdo->query("select * from coaches where id='$id'");
         foreach ($stmt as $row){
@@ -25,8 +28,13 @@ include ('../../component/nav.php')
             $movie2=$row['movie2'];
             $sub1=$row['sub1'];
             $sub2=$row['sub2'];
+            $comment=$row['comment'];
+            $prefecture=$row['prefecture'];
             $intro=$row['intro'];
+            $career=$row['career'];
             $schedule=$row['schedule'];
+            $locate=$row['locate'];
+            $fee=$row['fee'];
 
 
             echo ("
@@ -45,9 +53,14 @@ include ('../../component/nav.php')
                 <br>
                 
                 <div>
-                    <h1>$name</h1>
+                    <h1>$name($prefecture)</h1>
+                    <p>レッスン場所：$locate</p>
+                    <p>$comment</p>
                     <p class='intro'>$intro</p>
+                    <h3>経歴</h3>
+                    <p>$career</p>
                 </div>
+                <h2>予約の取りやすい日時</h2>
                 <div id='main-table'><table id='schedule'></table></div>
                 <script>
                     const output_csv = document.getElementById('schedule');
@@ -67,7 +80,7 @@ include ('../../component/nav.php')
                                     wak += \"</td>\";
                                 }else {
                                     if (dataArray[i][j]==='〇'){
-                                        wak += \"<td><a href='form.php?day=\"+dataArray[0][j]+\"&time=\"+dataArray[i][0]+\"&mail=$mail' style='text-decoration:none;color:white'>\";
+                                        wak += \"<td><a href='form.php?day=\"+dataArray[0][j]+\"&time=\"+dataArray[i][0]+\"&mail=$mail&locate=$locate&fee=$fee' style='text-decoration:none;color:white'>\";
                                         wak += dataArray[i][j];
                                         wak += \"</a></td>\";
                                     }else {

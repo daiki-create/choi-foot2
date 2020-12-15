@@ -5,8 +5,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include('../../component/head.php');  ?>
+    <?php include('../../component/head.php');
+    session_start();
+    if ($_SESSION['student']!=true){
+        $uli=$_SERVER['HTTP_REFERER'];
+        $message='生徒アカウントでログイン後にご利用いただけます。';
+        header("location:".$uli."&message=$message");
+    }?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -17,7 +25,9 @@ $me=$_SESSION['mail'];
 $coach=$_POST['mail'];
 $date=$_POST['date'];
 $time=$_POST['time'];
+$locate=$_POST['locate'];
 $util=$_POST['util'];
+$fee=$_POST['fee'];
 $content=$_POST['content'];
 
 $stmt=$pdo->query("select * from coaches where mail='$coach'");
@@ -34,7 +44,8 @@ $stmt=$pdo->prepare("insert into messages (sender,receiver,content,sender_name) 
 $params=array(
         ':sender'=>$coach,
         ':receiver'=>$_SESSION['mail'],
-        ':content'=>'予約を受け付けました。',
+        ':content'=>'仮予約を受け付けました。
+        まだ確定はしておりません。出勤不可の場合は恐れ入りますがこのチャットルームが削除されますのでご了承ください。',
         ':sender_name'=>$coach_name
 );
 $stmt->execute($params);
@@ -48,7 +59,7 @@ $params=array(
 );
 $stmt->execute($params);
 
-$stmt=$pdo->prepare("insert into lessons (coach,student,coach_name,student_name,date,time,util,content) values (:coach,:student,:coach_name,:student_name,:date,:time,:util,:content)");
+$stmt=$pdo->prepare("insert into lessons (coach,student,coach_name,student_name,date,time,util,content,locate,fee) values (:coach,:student,:coach_name,:student_name,:date,:time,:util,:content,:locate,:fee)");
 $params=array(
     ':coach'=>$coach,
     'student'=>$me,
@@ -57,14 +68,16 @@ $params=array(
     ':date'=>$date,
     ':time'=>$time,
     ':util'=>$util,
-    ':content'=>$content
+    ':content'=>$content,
+    ':locate'=>$locate,
+    ':fee'=>$fee
 );
 $stmt->execute($params);
 
 ?>
 <div class="main">
     <div class="left">
-        <h1>予約完了</h1>
+        <h1>仮予約完了</h1>
         <p>練習の詳細につきましてはチャットよりコーチと連絡を取ってください。</p>
     </div>
     <div class="right">

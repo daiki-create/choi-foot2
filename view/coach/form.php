@@ -5,8 +5,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include('../../component/head.php');  ?>
+    <?php include('../../component/head.php');
+    session_start();
+    if ($_SESSION['student']!=true){
+        $uli=$_SERVER['HTTP_REFERER'];
+        $message='生徒アカウントでログイン後にご利用いただけます。';
+        header("location:".$uli."&message=$message");
+    }
+    ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -18,6 +27,8 @@ $mail=$_GET['mail'];
         <?php
         $day=$_GET['day'];
         $time=$_GET['time'];
+        $locate=$_GET['locate'];
+        $fee=$_GET['fee'];
 
         echo "
            <form action=\"confirm.php\" method=\"post\">
@@ -39,6 +50,8 @@ $mail=$_GET['mail'];
             
             <input type=\"hidden\" name=\"date\" value=$day>
             <input type=\"hidden\" name=\"time\" value='$time'>
+            <input type=\"hidden\" name=\"locate\" value='$locate'>
+            <input type=\"hidden\" name=\"fee\" value='$fee'>
             <input type='hidden' value=$mail name='mail'>
             <input class='form-btn' type=\"submit\" value=\"確認画面へ\">
         </form> 

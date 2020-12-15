@@ -8,6 +8,8 @@
     <script src="../../js/jquery.min.js"></script>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -16,6 +18,7 @@ include ('../../component/nav.php')
 <div class="main">
     <div class="left">
         <p>ちょいふっとを退会してもよろしいですか？</p>
+        <input value="戻る" onclick="history.back();" type="button">
         <button class="form-btn" onclick="location.href='delete-account.php'">退会する</button>
     </div>
     <div class="right">

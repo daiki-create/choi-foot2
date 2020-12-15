@@ -1,70 +1,89 @@
 
 
+
 <?php
 session_start();
 $me=$_SESSION['mail'];
 include '../../component/head.php';
 
-$img_name=md5(uniqid(rand(),true)).'.jpg';
-$video_name=md5(uniqid(rand(),true)).'.mp4';
-
-if ($_POST['student_prof']){
-    $student_prof=$_POST['student_prof'];
-    copy($student_prof,"../../img/$img_name");
+if ($_FILES['student_prof']){
+    $img_name=md5(uniqid(rand(),true)).'.jpg';
     $stmt=$pdo->prepare('update students set prof=:prof where mail=:me');
     $params=array(
         ':prof'=>$img_name,
         ':me'=>$me
     );
     $stmt->execute($params);
+    move_uploaded_file($_FILES['student_prof']['tmp_name'], '../../img/'.$img_name);
+    $referer=$_SERVER['HTTP_REFERER'];
+    header("location: $referer");
     exit();
 }
-$coach_prof=$_POST['coach_prof'];
-$movie1=$_POST['movie1'];
-$movie2=$_POST['movie2'];
-$sub1=$_POST['sub1'];
-$sub2=$_POST['sub2'];
-if ($_POST['coach_prof']){
-    $stmt=$pdo->prepare('update coaches set prof=:prof');
+if ($_FILES['coach_prof']){
+    $img_name=md5(uniqid(rand(),true)).'.jpg';
+    $stmt=$pdo->prepare('update coaches set prof=:prof where mail=:me');
     $params=array(
-        ':prof'=>$coach_prof
+        ':prof'=>$img_name,
+        ':me'=>$me
     );
     $stmt->execute($params);
-    copy($coach_prof,"../../img/$img_name");
+    move_uploaded_file($_FILES['coach_prof']['tmp_name'], '../../img/'.$img_name);
+    $referer=$_SERVER['HTTP_REFERER'];
+    header("location: $referer");
     exit();
 }
-if ($_POST['movie1']){
-    $stmt=$pdo->prepare('update coaches set movie1=:movie1');
+
+
+if ($_FILES['movie1']){
+    $video_name=md5(uniqid(rand(),true)).'.mp4';
+    $stmt=$pdo->prepare('update coaches set movie1=:movie1 where mail=:me');
     $params=array(
-        ':movie1'=>$movie1
+        ':movie1'=>$video_name,
+        ':me'=>$me
     );
     $stmt->execute($params);
-    copy($movie1,"../../video/$video_name");
-    exit();
+    move_uploaded_file($_FILES['movie1']['tmp_name'], '../../video/'.$video_name);
+    $referer=$_SERVER['HTTP_REFERER'];
+    $message1="変更しました。";
+    header("location: $referer?&message1=$message1");
 }
-if ($_POST['movie2']){
-    $stmt=$pdo->prepare('update coaches set movie2=:movie2');
+if ($_FILES['movie2']){
+    $video_name=md5(uniqid(rand(),true)).'.mp4';
+    $stmt=$pdo->prepare('update coaches set movie2=:movie2 where mail=:me');
     $params=array(
-        ':movie2'=>$movie2
+        ':movie2'=>$video_name,
+        ':me'=>$me
     );
     $stmt->execute($params);
-    copy($movie2,"../../video/$video_name");
-    exit();
+    move_uploaded_file($_FILES['movie2']['tmp_name'], '../../img/'.$video_name);
+    $referer=$_SERVER['HTTP_REFERER'];
+    $message2="変更しました。";
+    header("location: $referer?&message2=$message2");
 }
-if ($_POST['sub1']){
-    $stmt=$pdo->prepare('update coaches set sub1=:sub1');
+if ($_FILES['sub1']){
+    $img_name=md5(uniqid(rand(),true)).'.jpg';
+    $stmt=$pdo->prepare('update coaches set sub1=:sub1 where mail=:me');
     $params=array(
-        ':sub1'=>$sub1
+        ':sub1'=>$img_name,
+        ':me'=>$me
     );
     $stmt->execute($params);
-    copy($sub1,"../../img/$img_name");
-    exit();
+    move_uploaded_file($_FILES['sub1']['tmp_name'], '../../img/'.$img_name);
+    $referer=$_SERVER['HTTP_REFERER'];
+    $message3="変更しました。";
+    header("location: $referer?&message3=$message3");
 }
-if ($_POST['sub2']){
-    $stmt=$pdo->prepare('update coaches set sub2=:sub2');
+if ($_FILES['sub2']){
+    $img_name=md5(uniqid(rand(),true)).'.jpg';
+    $stmt=$pdo->prepare('update coaches set sub2=:sub2 where mail=:me');
     $params=array(
-        ':sub2'=>$sub2
+        ':sub2'=>$img_name,
+        ':me'=>$me
     );
     $stmt->execute($params);
-    copy($sub2,"../../img/$img_name");
+    move_uploaded_file($_FILES['sub2']['tmp_name'], '../../img/'.$img_name);
+    $referer=$_SERVER['HTTP_REFERER'];
+    $message4="変更しました。";
+    header("location: $referer?&message4=$message4");
 }
+

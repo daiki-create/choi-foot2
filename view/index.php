@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <?php include('../component/head.php');  ?>
+    <link rel="shortcut icon" href="../img/favicon.ico">
     <link rel="stylesheet" href="../css/layout.css">
-
+    <link rel="stylesheet" href="../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <div class="nav">
@@ -17,8 +19,8 @@
                     <li class="menu-item"><a href="../view/use/index.php">ご利用について</a></li>
                     <li class="menu-item"><a href="../view/recruit/index.php">コーチ募集</a></li>
                     <li class="menu-item"><a href="../view/contact/index.php">お問い合わせ</a></li>
-                    <li class="menu-item"><a href="../view/contact/index.php">利用規約</a></li>
-                    <li class="menu-item"><a href="../view/contact/index.php">プライバシーポリシー</a></li>
+                    <li class="menu-item"><a href="../view/terms/index.php">利用規約</a></li>
+                    <li class="menu-item"><a href="../view/terms/privacy.php">個人情報保護方針</a></li>
                     <li class="menu-item"><a href="../view/retire/index.php">退会</a></li>
                 </ul>
             </div>
@@ -37,6 +39,7 @@
             <button id="search-btn" class="search-btn" type="button" onclick="click_search_btn()"></button>
             <button id="search-btn2" style="display: none;" class="search-btn" type="submit"></button>
         </form>
+
         <script>
         var count=0;
             function click_search_btn(){
@@ -46,7 +49,7 @@
             }
         </script>
     </div>
-    <ul>
+    <ul class="nav-ul">
         <li class="nav-item"><a href="./">TOP</a></li>
         <li class="nav-item"><a href="message/index.php">チャット</a></li>
         <li class="nav-item"><a href="mypage/index.php">マイページ</a></li>
@@ -55,7 +58,10 @@
 </div>
 <div class="main">
     <div class="left">
-        <div class="all-favo">
+        <?php
+        echo htmlentities($_GET['error'])
+        ?>
+        <div class="all-favo" style="display: none">
             <div class="all" onclick="click_all_border()">すべて</div>
             <span class="all-border" id="all-border"></span>
             <div class="favo" onclick="click_favo_border()">お気に入り</div>
@@ -63,6 +69,12 @@
         </div>
         <br>
         <br>
+        <div class="pr_sp" >
+            <a href="http://toyama.e-vida.jp/">
+                <img src="../img/vida.jpg" alt="" style="max-width: 100%; object-fit: cover">
+                <p style="color: lightblue">[PR]フットサルのことならVIDA富山!</p>
+            </a>
+        </div>
         <?php
         echo $_GET['message'];;
         ?>
@@ -79,6 +91,10 @@
             <div class='coach-card'>
                 <a href='coach/index.php?id=$id'>
                     <img class='coach-prof' src='../img/$prof' alt=''>
+                    <div style='position: absolute;top:20px;left: 100px ;display: none'>
+                        <div style='color: white'>♡</div>
+                        <div style='color: lightgreen;display: none'>♥</div>
+                     </div>
                     <div class='prefecture'>$prefecture</div>
                     <div class='fee'>$fee 円/30分</div>
                 </a>
@@ -93,9 +109,9 @@
 
             ?>
         </div>
-        <div id="favo-page">
-            favo
-        </div>
+        <br><br>
+        <div class="pr_sp" >
+            <a href="https://t.afi-b.com/visit.php?guid=ON&a=Y7654s-j259751p&p=j790713o" rel="nofollow"><img src="https://www.afi-b.com/upload_image/7654-1455263468-3.jpg" width="336" height="280" style="border:none;" alt="全国菓子大博覧会受賞店のホワイトデー" /></a><img src="https://t.afi-b.com/lead/Y7654s/j790713o/j259751p" width="1" height="1" style="border:none;" />        </div>
         <script>
             function click_all_border(){
                 document.getElementById('all-border').style.cssText='display:block'
@@ -113,7 +129,25 @@
         </script>
     </div>
     <div class="right">
-        <?php include('../component/pr.php');  ?>
+        <p>[PR]</p>
+        <p>フットサルのことならVIDA富山!</p>
+        <a href="http://toyama.e-vida.jp/">
+            <img src="../../img/vida.jpg" alt="" style="max-width: 100%; object-fit: cover">
+        </a>
+        <br>
+        <p>好きならーめん見つかる↓</p>
+        <a href="https://noodrepo.net">
+            <img src="../../img/noodrepo.jpg" alt="" style="max-width: 100%;object-fit: cover">
+        </a>
+        <p>by「ぬどレポ」</p>
+        <br>
+        <a href="https://t.afi-b.com/visit.php?guid=ON&a=Y7654s-k257228b&p=x790622p" rel="nofollow"><img src="https://www.afi-b.com/upload_image/7654-1452130094-3.jpg" width="336" height="280" style="border:none;" alt="チョコレート専門店サロンドロワイヤルのバレンタイン" /></a><img src="https://t.afi-b.com/lead/Y7654s/x790622p/k257228b" width="1" height="1" style="border:none;" />
+        <br>
+        <p>みんなが密かに好きな商品を共有できるサイト（完全無料）</p>
+        <a href="https://itutubo.com">
+            <img src="../../img/itutubo.jpg" alt="" style="max-width: 100%;object-fit: cover">
+        </a>
+
     </div>
 </div>
 <div class="footer">
@@ -127,6 +161,14 @@
         <li class="footer-item"><a href="use/index.php">ご利用について</a></li>
         <li class="footer-item"><a href="recruit/index.php">コーチ募集</a></li>
         <li class="footer-item"><a href="contact/index.php">お問い合わせ</a></li>
+    </ul>
+</div>
+<div class="nav2">
+    <ul>
+        <li class="nav-item"><a href="../view/index.php">TOP</a></li>
+        <li class="nav-item"><a href="../view/message/index.php">チャット</a></li>
+        <li class="nav-item"><a href="../view/mypage/index.php">マイページ</a></li>
+        <li class="nav-item"><a href="../view/lesson/index.php">レッスン</a></li>
     </ul>
 </div>
 

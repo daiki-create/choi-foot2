@@ -3,6 +3,8 @@
 <head>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -11,7 +13,7 @@ include ('../../component/nav.php')
 <div class="main">
     <div class="left">
         <?php
-        echo $_GET['error']
+        echo htmlentities($_GET['error'])
         ?>
         <div>
             <h1>レンタルコーチって？</h1>

@@ -3,6 +3,8 @@
 <head>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -11,7 +13,13 @@ include ('../../component/nav.php')
 <div class="main">
     <div class="left">
         <?php
-        $search=$_POST['search-txt'];
+        $search=htmlentities($_POST['search-txt']);
+        $referer=$_SERVER['HTTP_REFERER'];
+        if (strlen(trim($search))>100){
+            $error="検索語数が多すぎます。";
+            header("location: $referer?error=$error");
+            exit();
+        }
         echo "<h1>「 $search 」の検索結果</h1>";
         $stmt=$pdo->query("select * from coaches where name like '%$search%' or prefecture like '%$search%'");
         foreach ($stmt as $row){

@@ -5,6 +5,8 @@
 <head>
     <?php include('../../component/head.php');  ?>
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/540.css" media="screen and (max-width:540px)">
+    <link rel="stylesheet" href="../../css/320.css" media="screen and (max-width:320px)">
 </head>
 <body>
 <?php
@@ -13,10 +15,9 @@ include ('../../component/nav.php')
 <div class="main">
     <div class="left">
         <?php
-        $content=$_POST['content'];
-        $from=$_POST['mail'];
-        $subject='ちょいふっと';
-        $headers=$from;
+        $subject=htmlentities($_POST['name']);
+        $content=htmlentities($_POST['content']);
+        $headers="";
         $to="6280ikiad@gmail.com";
         mb_send_mail($to,$subject,$content,$headers);
         ?>
