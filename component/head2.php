@@ -5,7 +5,6 @@
 <title>ちょいふっと</title>
 <link rel="shortcut icon" href="../../img/favicon.ico">
 <meta name="viewport" content="width=device-width,shrink-to-fit=yes">
-
 <script>
     /* ピッチインピッチアウトによる拡大縮小を禁止 */
     document.documentElement.addEventListener('touchstart', function (e) {
@@ -29,8 +28,8 @@
 </style>
 <?php
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=mysql;charset=utf8',
-        'root',
+    $pdo = new PDO('mysql:host=mysql1024.db.sakura.ne.jp;dbname=whitecattle2_choi-foot;charset=utf8',
+        'whitecattle2',
         'Yd10989286',
         [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

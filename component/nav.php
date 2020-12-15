@@ -12,8 +12,8 @@
                     <li class="menu-item"><a href="../../view/use/index.php">ご利用について</a></li>
                     <li class="menu-item"><a href="../../view/recruit/index.php">コーチ募集</a></li>
                     <li class="menu-item"><a href="../../view/contact/index.php">お問い合わせ</a></li>
-                    <li class="menu-item"><a href="../../view/contact/index.php">利用規約</a></li>
-                    <li class="menu-item"><a href="../../view/contact/index.php">プライバシーポリシー</a></li>
+                    <li class="menu-item"><a href="../../view/terms/index.php">利用規約</a></li>
+                    <li class="menu-item"><a href="../../view/terms/privacy.php">個人情報保護方針</a></li>
                     <li class="menu-item"><a href="../../view/retire/index.php">退会</a></li>
                 </ul>
             </div>
@@ -41,7 +41,7 @@
             }
         </script>
     </div>
-    <ul>
+    <ul class="nav-ul">
         <li class="nav-item"><a href="../../view/index.php">TOP</a></li>
         <li class="nav-item"><a href="../../view/message/index.php">チャット</a></li>
         <li class="nav-item"><a href="../../view/mypage/index.php">マイページ</a></li>
